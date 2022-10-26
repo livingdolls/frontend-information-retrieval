@@ -5,7 +5,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, styled } from '@mui/material';
+import { Box, Button, styled } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Delete, Visibility } from '@mui/icons-material';
 
@@ -22,8 +22,8 @@ const HeadCell = styled(TableCell)((({theme}) => ({
 
 const ButtonTable = styled(Button)((({theme}) => ({
   backgroundColor: '#ff6b81',
-  padding: 2,
-  fontSize:'12px',
+  padding: 1,
+  fontSize:'9px',
   fontWeight: 'bolder',
   color: '#fff',
   marginLeft:1,
@@ -50,7 +50,7 @@ const Jurnal_Table = ({getSelectData}) => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <HeadTabel>
           <TableRow>
-            <HeadCell align="left" size='small'>No</HeadCell>
+            <HeadCell align="left">No</HeadCell>
             <HeadCell>Judul Dokumen</HeadCell>
             <HeadCell>Kode Dokumen</HeadCell>
             <HeadCell>Tahun Terbit</HeadCell>
@@ -70,8 +70,10 @@ const Jurnal_Table = ({getSelectData}) => {
               <TableCell>{row.kd_jurnal}</TableCell>
               <TableCell>2020</TableCell>
               <TableCell>
-                <ButtonTable onClick={() => getSelectData(row.id,row.title,row.pengarang,row.tahun_terbit,row.abstrak,row.kd_jurnal)}><Visibility /></ButtonTable>
-                <ButtonTable><Delete /></ButtonTable>
+                <Box display={'flex'} flexDirection={'row'}>
+                  <Visibility onClick={() => getSelectData(row.id,row.title,row.pengarang,row.tahun_terbit,row.abstrak,row.kd_jurnal) }/>
+                  <Delete />
+                </Box>
               </TableCell>
             </TableRow>
           ))}

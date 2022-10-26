@@ -16,10 +16,9 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
     color:'#fff'
   })))
 
-const TokenText = ({data}) => {
-    console.log(data)
+const DataIndex = ({kata}) => {
     return(
-        <Box sx={{mt:3, width:'90%', marginLeft:'auto', marginRight:'auto'}}>
+        <Box sx={{width:'100%', marginLeft:'auto', marginRight:'auto'}}>
             <TableContainer component={Paper}>
             <Table aria-label="simple table">
             <HeadTabel>
@@ -27,12 +26,12 @@ const TokenText = ({data}) => {
                 <HeadCell align="left" size='small'>No</HeadCell>
                 <HeadCell>Jurnal id</HeadCell>
                 <HeadCell>Token</HeadCell>
-                <HeadCell>Kode Jurnal</HeadCell>
+                <HeadCell>Term Frequency</HeadCell>
                 </TableRow>
             </HeadTabel>
 
             <TableBody>
-                {data.map((d,index) => {
+                {kata.map((d,index) => {
                     return (<TableRow
                         key={d.id}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -42,7 +41,7 @@ const TokenText = ({data}) => {
                         {d.jurnal_id}
                         </TableCell>
                         <TableCell>{d.token}</TableCell>
-                        <TableCell>{d.kd_jurnal}</TableCell>
+                        <TableCell>{d.jumlah}</TableCell>
                     </TableRow>)
                 })}
 
@@ -53,4 +52,4 @@ const TokenText = ({data}) => {
     )
 }
 
-export default TokenText
+export default DataIndex

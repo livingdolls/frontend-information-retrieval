@@ -1,3 +1,4 @@
+import { Box, Button, styled, Typography } from "@mui/material";
 import Layout from "../../components/Layout";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -6,10 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button , styled, Typography } from "@mui/material";
+import { Refresh, Visibility } from "@mui/icons-material";
 import { useState } from "react";
 import Display from "./Display";
-import { Refresh, Visibility } from "@mui/icons-material";
 
 const HeadTabel = styled(TableHead)((({theme}) => ({
     backgroundColor: '#ff6b81',
@@ -32,62 +32,35 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
         backgroundColor: '#ee6b81',
       }
   })))
+
   
-  
-  const Preprocessing = ({data}) => {
-    const [text, setText] = useState([]);
-    const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
-    
-    const handleButton = async (kunci, id) => {
-        setOpen(true)
+  const BuatIndex = ({data}) => {
+      const [loading, setLoading] = useState(false);
+      const [open, setOpen] = useState(false);
+      const [kata, setKata] = useState([]);
 
-        if(kunci === 'casefolding'){
-            await fetch('http://localhost/mytfidf/API/_getCasefolding.php?id='+id)
-            .then(res => res.json())
-            .then(d => setText(d))
-            
-            return ""
-        }
 
-        if(kunci === 'tokenisasi'){
-            await fetch('http://localhost/mytfidf/API/_getTokenisasi.php?id='+id)
-            .then(res => res.json())
-            .then(d => setText(d))
-            
-            return ""
-        }
-
-        if(kunci === 'filtering'){
-            await fetch('http://localhost/mytfidf/API/_getFiltering.php?id='+id)
-            .then(res => res.json())
-            .then(d => setText(d))
-            
-            return ""
-        }
-
-        if(kunci === 'stemming'){
-            await fetch('http://localhost/mytfidf/API/_getStemming.php?id='+id)
-            .then(res => res.json())
-            .then(d => setText(d))
-            return ""
-        }
-    }
-
-    const handleRefresh = async () => {
+      const handleRefresh = async () => {
         setLoading(true)
 
-        await fetch('http://localhost/mytfidf/_textPreprocessing.php')
+        await fetch('http://localhost/mytfidf/API/_BuatIndex.php')
         .then(res => res.json())
 
         setLoading(false)
     }
+    
+      const handleButton = async (id) => {
+        setOpen(true);
 
+        await fetch('http://localhost/mytfidf/API/_getIndexById.php?id='+id)
+            .then(res => res.json())
+            .then(d => setKata(d))
+      }
     return(
         <Layout>
             <Box display={'flex'} flexDirection={'column'} gap={3} sx={{backgroundColor:'#fff', padding:1, paddingLeft:5}}>
               <Box sx={{padding:'15px', backgroundColor:'#ff6b81', ml:-5, mt:-1, mr:-1}}>
-                <Typography fontWeight={'bolder'} variant="h6" sx={{color:'#fff'}}>Text Preprocessing</Typography>
+                <Typography fontWeight={'bolder'} variant="h6" sx={{color:'#fff'}}>Buat Index</Typography>
               </Box>
 
               {loading 
@@ -97,18 +70,14 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
                 <ButtonTable onClick={handleRefresh} endIcon={<Refresh />} sx={{width:"150px",ml:-4, p:1, fontSize:"14px"}}>Refresh</ButtonTable>
               }
 
-                
-                <Box sx={{marginLeft:-4}}>
-                    <TableContainer component={Paper}>
+              <Box sx={{padding:'15px', ml:-5, mt:-1, mr:-1}}>
+                  <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <HeadTabel>
                             <TableRow>
                                 <HeadCell align="left" size='small'>No</HeadCell>
                                 <HeadCell>Judul Dokumen</HeadCell>
-                                <HeadCell>Case Folding</HeadCell>
-                                <HeadCell>Tokenisasi</HeadCell>
-                                <HeadCell>Filtering</HeadCell>
-                                <HeadCell>Stemming</HeadCell>
+                                <HeadCell>Index Term Frequency</HeadCell>
                             </TableRow>
                             </HeadTabel>
                             <TableBody>
@@ -122,16 +91,7 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
                                     {row.title}
                                 </TableCell>
                                 <TableCell>
-                                    <ButtonTable onClick={() => handleButton('casefolding', row.id)}><Visibility /></ButtonTable>
-                                </TableCell>
-                                <TableCell>
-                                    <ButtonTable onClick={() => handleButton('tokenisasi', row.id)}><Visibility /></ButtonTable>
-                                </TableCell>
-                                <TableCell>
-                                    <ButtonTable onClick={() => handleButton('filtering', row.id)}><Visibility /></ButtonTable>
-                                </TableCell>
-                                <TableCell>
-                                    <ButtonTable onClick={() => handleButton('stemming', row.id)}><Visibility /></ButtonTable>
+                                    <ButtonTable onClick={() => handleButton(row.id)}><Visibility /></ButtonTable>
                                 </TableCell>
                                 </TableRow>
                             ))}
@@ -139,14 +99,13 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
                         </Table>
                 </TableContainer>
             </Box>
-        </Box>
-
-        <Display data={text} open={open} setOpen={setOpen} />
+            </Box>
+            <Display open={open} setOpen={setOpen} kata={kata} />
         </Layout>
     )
 }
 
-export default Preprocessing;
+export default BuatIndex;
 
 export const getStaticProps = async () => {
     const res = await fetch('http://localhost/mytfidf/API/_getAllJurnal.php') 

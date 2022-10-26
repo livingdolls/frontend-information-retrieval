@@ -1,14 +1,14 @@
-import { Article, FormatAlignJustify, Functions, Home, Password, Percent } from "@mui/icons-material";
+import { Article, FormatAlignJustify, Functions, Home, Password, Percent, Search } from "@mui/icons-material";
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useState } from "react";
 
 const menus = [
-    {jdl:"Home", link: "/pencarian", icon:<Home />},
+    {jdl:"Home", link: "/", icon:<Home />},
+    {jdl:"Pencarian", link: "/pencarian", icon:<Search />},
     {jdl:"Data Jurnal", link: "/jurnal", icon:<Article />},
     {jdl:"Text Processing", link: "/preprocessing", icon:<FormatAlignJustify />},
-    {jdl:"Pembuatan Index", link: "/pengindexan", icon:<Password />},
+    {jdl:"Pembuatan Index", link: "/buatindex", icon:<Password />},
     {jdl:"TF-IDF", link: "/informasi", icon:<Functions />},
     {jdl:"Cosine Similarity", link: "/informasi", icon:<Percent />},
 ]

@@ -1,4 +1,4 @@
-import { Box, Paper, Typography, styled } from "@mui/material";
+import { Box, Paper, styled } from "@mui/material";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,10 +16,9 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
     color:'#fff'
   })))
 
-const TokenText = ({data}) => {
-    console.log(data)
+const TokenizingResult = ({data}) => {
     return(
-        <Box sx={{mt:3, width:'90%', marginLeft:'auto', marginRight:'auto'}}>
+        <Box sx={{width:'100%', marginLeft:'auto', marginRight:'auto'}}>
             <TableContainer component={Paper}>
             <Table aria-label="simple table">
             <HeadTabel>
@@ -53,4 +52,4 @@ const TokenText = ({data}) => {
     )
 }
 
-export default TokenText
+export default TokenizingResult;

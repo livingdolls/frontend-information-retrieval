@@ -1,11 +1,11 @@
 import { Close } from "@mui/icons-material"
 import { Modal, Box, styled } from "@mui/material"
+import TokenIndex from "../../components/token_text/TokenIndex"
 import CaseText from "./CaseText"
-import TokenText from "./TokenText"
 
 const HeadInfo = styled(Box)((({theme}) => ({
-    backgroundColor: '#ff6b81',
-    padding: 16,
+    backgroundColor: '#fff',
+    padding: 8,
     fontSize:'19px',
     fontWeight: 'bolder',
     color: '#fff',
@@ -31,12 +31,12 @@ const Display = ({data,open, setOpen}) => {
         <HeadInfo display={'flex'} justifyContent='space-between'>
             Result
 
-            <Close onClick={() => setOpen(false)} />
+            <Close onClick={() => setOpen(false)} sx={{color:"#ff6b81"}} />
         </HeadInfo>
 
         <BodyInfo>
            {data.term && <CaseText data = {data} />}
-           {data[0] && <TokenText data = {data} />}
+           {data[0] && <TokenIndex data = {data} />}
         </BodyInfo>
     </Box>
     </Modal>

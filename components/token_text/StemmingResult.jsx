@@ -16,17 +16,17 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
     color:'#fff'
   })))
 
-const TokenText = ({data}) => {
-    console.log(data)
+const StemmingResult = ({data}) => {
     return(
-        <Box sx={{mt:3, width:'90%', marginLeft:'auto', marginRight:'auto'}}>
+        <Box sx={{width:'100%', marginLeft:'auto', marginRight:'auto'}}>
             <TableContainer component={Paper}>
             <Table aria-label="simple table">
             <HeadTabel>
                 <TableRow>
                 <HeadCell align="left" size='small'>No</HeadCell>
-                <HeadCell>Jurnal id</HeadCell>
-                <HeadCell>Token</HeadCell>
+                <HeadCell>Kode Jurnal</HeadCell>
+                <HeadCell>Kata Asli</HeadCell>
+                <HeadCell>Hasil Stemming</HeadCell>
                 <HeadCell>Kode Jurnal</HeadCell>
                 </TableRow>
             </HeadTabel>
@@ -41,7 +41,8 @@ const TokenText = ({data}) => {
                         <TableCell component="th" scope="row">
                         {d.jurnal_id}
                         </TableCell>
-                        <TableCell>{d.token}</TableCell>
+                        <TableCell>{d.token_filtering}</TableCell>
+                        <TableCell>{d.token_stemming}</TableCell>
                         <TableCell>{d.kd_jurnal}</TableCell>
                     </TableRow>)
                 })}
@@ -53,4 +54,4 @@ const TokenText = ({data}) => {
     )
 }
 
-export default TokenText
+export default StemmingResult;
