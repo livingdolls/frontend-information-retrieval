@@ -9,8 +9,8 @@ const menus = [
     {jdl:"Data Jurnal", link: "/jurnal", icon:<Article />},
     {jdl:"Text Processing", link: "/preprocessing", icon:<FormatAlignJustify />},
     {jdl:"Pembuatan Index", link: "/buatindex", icon:<Password />},
-    {jdl:"TF-IDF", link: "/informasi", icon:<Functions />},
-    {jdl:"Cosine Similarity", link: "/informasi", icon:<Percent />},
+    {jdl:"TF-IDF", link: "/tfidf", icon:<Functions />},
+    {jdl:"Cosine Similarity", link: "/cosinesimilarity", icon:<Percent />},
 ]
 
 

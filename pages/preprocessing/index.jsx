@@ -10,6 +10,7 @@ import { Box, Button , styled, Typography } from "@mui/material";
 import { useState } from "react";
 import Display from "./Display";
 import { Refresh, Visibility } from "@mui/icons-material";
+import MainButton from "../../components/MainButton";
 
 const HeadTabel = styled(TableHead)((({theme}) => ({
     backgroundColor: '#ff6b81',
@@ -19,18 +20,6 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
     fontSize:'18px',
     fontWeight:'bolder',
     color:'#fff'
-  })))
-  
-  const ButtonTable = styled(Button)((({theme}) => ({
-    backgroundColor: '#ff6b81',
-    padding: 2,
-    fontSize:'12px',
-    fontWeight: 'bolder',
-    color: '#fff',
-    marginLeft:1,
-    '&:hover': {
-        backgroundColor: '#ee6b81',
-      }
   })))
   
   
@@ -84,17 +73,12 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
     }
 
     return(
-        <Layout>
-            <Box display={'flex'} flexDirection={'column'} gap={3} sx={{backgroundColor:'#fff', padding:1, paddingLeft:5}}>
-              <Box sx={{padding:'15px', backgroundColor:'#ff6b81', ml:-5, mt:-1, mr:-1}}>
-                <Typography fontWeight={'bolder'} variant="h6" sx={{color:'#fff'}}>Text Preprocessing</Typography>
-              </Box>
-
+        <Layout judulmenu = {"Text Preprocessing"}>
               {loading 
                 ?
-                <ButtonTable disabled endIcon={<Refresh />} sx={{width:"150px",ml:-4, p:1, fontSize:"14px", backgroundColor:"#eee"}}>Refresh...</ButtonTable>
+                <MainButton disabled endIcon={<Refresh />} sx={{width:"150px",ml:-4, p:1, fontSize:"14px", backgroundColor:"#eee"}}>Refresh...</MainButton>
                 :
-                <ButtonTable onClick={handleRefresh} endIcon={<Refresh />} sx={{width:"150px",ml:-4, p:1, fontSize:"14px"}}>Refresh</ButtonTable>
+                <MainButton onClick={handleRefresh} endIcon={<Refresh />} sx={{width:"150px",ml:-4, p:1, fontSize:"14px"}}>Refresh</MainButton>
               }
 
                 
@@ -122,16 +106,16 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
                                     {row.title}
                                 </TableCell>
                                 <TableCell>
-                                    <ButtonTable onClick={() => handleButton('casefolding', row.id)}><Visibility /></ButtonTable>
+                                    <MainButton onClick={() => handleButton('casefolding', row.id)}><Visibility /></MainButton>
                                 </TableCell>
                                 <TableCell>
-                                    <ButtonTable onClick={() => handleButton('tokenisasi', row.id)}><Visibility /></ButtonTable>
+                                    <MainButton onClick={() => handleButton('tokenisasi', row.id)}><Visibility /></MainButton>
                                 </TableCell>
                                 <TableCell>
-                                    <ButtonTable onClick={() => handleButton('filtering', row.id)}><Visibility /></ButtonTable>
+                                    <MainButton onClick={() => handleButton('filtering', row.id)}><Visibility /></MainButton>
                                 </TableCell>
                                 <TableCell>
-                                    <ButtonTable onClick={() => handleButton('stemming', row.id)}><Visibility /></ButtonTable>
+                                    <MainButton onClick={() => handleButton('stemming', row.id)}><Visibility /></MainButton>
                                 </TableCell>
                                 </TableRow>
                             ))}
@@ -139,7 +123,6 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
                         </Table>
                 </TableContainer>
             </Box>
-        </Box>
 
         <Display data={text} open={open} setOpen={setOpen} />
         </Layout>
