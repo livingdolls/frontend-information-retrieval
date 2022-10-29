@@ -43,7 +43,7 @@ const CosineSimilarity = ({ data }) => {
 
     const handleButton = async (id) => {
         setOpen(true)
-        await fetch('http://localhost/mytfidf/API/_getCosine.php?id='+id)
+        await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/API/_getCosine.php?id=`+id)
         .then(res => res.json())
         .then((d) => setText(d))
     }
@@ -89,7 +89,7 @@ const CosineSimilarity = ({ data }) => {
 export default CosineSimilarity;
 
 export const getStaticProps = async () => {
-    const res = await fetch('http://localhost/mytfidf/API/_getJurnalCosine.php') 
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/API/_getJurnalCosine.php`) 
     const data = await res.json()
 
     return {

@@ -17,7 +17,7 @@ const Tfidf = ({ data }) => {
 
     const handleButton = async (id) => {
         setOpen(true)
-        await fetch('http://localhost/mytfidf/API/_getTfidfById.php?id='+id)
+        await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/API/_getTfidfById.php?id=`+id)
         .then(res => res.json())
         .then(d => setText(d))
 
@@ -65,7 +65,7 @@ const Tfidf = ({ data }) => {
 export default Tfidf;
 
 export const getStaticProps = async () => {
-    const res = await fetch('http://localhost/mytfidf/API/_getAllJurnal.php') 
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/API/_getAllJurnal.php`) 
     const data = await res.json()
 
     return {

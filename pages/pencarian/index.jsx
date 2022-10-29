@@ -1,36 +1,16 @@
 import { Search } from "@mui/icons-material";
-import { Box, Button, CircularProgress, styled, TextField, Typography } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useState } from "react";
+import MainInput from "../../components/Form/MainInput";
 import Layout from "../../components/Layout";
+import MainButton from "../../components/MainButton";
 import BoxResult from "./BoxResult";
-
-const BoxSearch = styled(Box)((({theme}) => ({
-    
-})))
-
-const Field = styled(TextField)({
-    width:'629px',
-    '& label.Mui-focused': {
-      color: '#ff6b81',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#ff6b81',
-    },
-    '& .MuiOutlinedInput-root': {
-      '&:hover fieldset': {
-        borderColor: '#ff6b81',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#ff6b81',
-      },
-    },
-});
 
 const Pencarian = () => {
   const [query, setQuery] = useState();
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState({
-    jml : 0,
+    jml: 0,
     data: []
   });
 
@@ -39,72 +19,56 @@ const Pencarian = () => {
     setLoading(true);
 
     // Validate
-    if(!query){
-      setAlert({alert:true,pesan:'Title tidak boleh kosong',severity:'error'})
+    if (!query) {
+      setAlert({ alert: true, pesan: 'Title tidak boleh kosong', severity: 'error' })
       setTimeout(() => {
-        setAlert({alert:false,pesan:'Title tidak boleh kosong',severity:'error'})
-          setLoading(false)
+        setAlert({ alert: false, pesan: 'Title tidak boleh kosong', severity: 'error' })
+        setLoading(false)
       }, 2000);
       return ''
     }
 
-    await fetch('http://localhost/mytfidf/_getPencarian.php', {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/_getPencarian.php`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body:JSON.stringify({
-        'query' : query
+      body: JSON.stringify({
+        'query': query
       })
     })
-    .then((res) => res.json())
-    .then((data) => {
-      setResult(data)
-      setLoading(false)
-    })
-
-
+      .then((res) => res.json())
+      .then((data) => {
+        setResult(data)
+        setLoading(false)
+      })
   }
-    return(
-        <Layout>
-            <Box display={'flex'} flexDirection={'column'} gap={3} sx={{backgroundColor:'#fff', padding:1, paddingLeft:5}}>
-              <Box sx={{padding:'15px', backgroundColor:'#ff6b81', ml:-5, mt:-1, mr:-1}}>
-                <Typography fontWeight={'bolder'} variant="h6" sx={{color:'#fff'}}>Pencarian</Typography>
-              </Box>
-                <BoxSearch>
-                  <form onSubmit={handleSubmit}>
-                    <Field
-                        required
-                        placeholder="Kata Kunci Pencarian"
-                        size="small"
-                        onChange={(e) => setQuery(e.target.value)}
-                      />
+  
+  return (
+    <Layout judulmenu="Pencarian Jurnal">
+      <Box>
+        <form onSubmit={handleSubmit}>
+          <MainInput
+            placeholder="Kata Kunci Pencarian"
+            size="small"
+            onChange={(e) => setQuery(e.target.value)}
+            sx={{width:'629px'}}
+          />
 
-                        <Button 
-                          type="submit"
-                          variant="contained"
-                          sx={{
-                            ml :1,
-                            backgroundColor:'#ff6b81',
-                                '&:hover': {
-                                    backgroundColor: '#ee6b81',
-                              }
-                            }}
-                            >
-                                <Search />
-                        </Button>
-                    </form>
-                </BoxSearch>
-                
-                {loading 
-                  ?
-                      <CircularProgress sx={{ml:'300px'}} />
-                  :                      
-                      <BoxResult result={result} />
-                }
-            </Box>
-        </Layout>
-    )
+          <MainButton type="submit" sx={{ padding: '7px' }}>
+            <Search />
+          </MainButton>
+        </form>
+      </Box>
+
+      {loading
+        ?
+        <CircularProgress sx={{ ml: '300px' }} />
+        :
+        <BoxResult result={result} />
+      }
+    </Layout>
+  )
 }
 
 export default Pencarian;

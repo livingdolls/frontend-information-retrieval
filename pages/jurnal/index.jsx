@@ -1,8 +1,9 @@
 import { Add } from "@mui/icons-material";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { useState } from "react";
 import AlertModal from "../../components/AlertModal";
 import Layout from "../../components/Layout";
+import MainButton from "../../components/MainButton";
 import AddJurnal from "./AddJurnal";
 import Jurnal_Info from "./Jurnal_Info";
 import Jurnal_Table from "./Jurnal_Table";
@@ -38,16 +39,18 @@ const Jurnal = () => {
     }
 
     return(
-        <Layout>
-        <AlertModal pesan={alert.pesan} severity={alert.severity} alert={alert.alert} setAlert={alert.setAlert} />
-            <Box p={2} minHeight={'100vh'}>
-                <Button
-                onClick={handleOpen}
-                endIcon={<Add />} variant={'contained'} size={'large'} 
-                sx={{backgroundColor:'#ff6b81', '&:hover': {
-                    backgroundColor: '#ee6b81',
-                  }}}
-                >Tambah Dokumen Jurnal</Button>
+        <Layout judulmenu="Data Jurnal">
+            <AlertModal pesan={alert.pesan} severity={alert.severity} alert={alert.alert} setAlert={alert.setAlert} />
+     
+            <Box minHeight={'100vh'}>
+                <MainButton
+                    onClick={handleOpen}
+                    endIcon={<Add />}  
+                    size={'large'}
+                    sx={{marginBottom:-3}}
+                >
+                    Tambah Dokumen Jurnal
+                </MainButton>
 
                 <Grid container spacing={2} mt={2}>
                     <Grid item xs={8}>

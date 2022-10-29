@@ -1,19 +1,19 @@
 import { Box, styled, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 
-const HeadInfo = styled(Box)((({theme}) => ({
+const HeadInfo = styled(Box)({
     backgroundColor: '#ff6b81',
     padding: 16,
     fontSize:'19px',
     fontWeight: 'bolder',
     color: '#fff',
     borderRadius: '5px 5px 0 0'
-  })))
+  })
 
-const BodyInfo = styled(Box)((({theme}) => ({
+const BodyInfo = styled(Box)({
     backgroundColor: '#fff',
     padding: 8,
     fontSize:'15px'
-  })))
+  })
 
 const Jurnal_Info = ({selectData}) => {
     

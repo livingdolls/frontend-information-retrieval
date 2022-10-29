@@ -1,13 +1,13 @@
 import { Box, Card, CardActions, CardContent, CardHeader, styled, Typography } from "@mui/material";
 import Link from "next/link";
 
-const BoxInfo = styled(Box)((({theme}) => ({
+const BoxInfo = styled(Box)({
     backgroundColor: '#ff6b81',
     padding: 5,
     fontSize:'15px',
     color:'#fff',
     marginLeft:4,
-})))
+})
 
 const CardJurnal = ({d}) => {
     return (

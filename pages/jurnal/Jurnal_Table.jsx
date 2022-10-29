@@ -1,54 +1,31 @@
-import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Box, Button, styled } from '@mui/material';
+import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Delete, Visibility } from '@mui/icons-material';
+import MainTabel from '../../components/Tabel/MainTabel';
+import TabelHead from '../../components/Tabel/TabelHead';
+import HeadCell from '../../components/Tabel/HeadCell';
 
-
-const HeadTabel = styled(TableHead)((({theme}) => ({
-  backgroundColor: '#ff6b81',
-})))
-
-const HeadCell = styled(TableCell)((({theme}) => ({
-  fontSize:'18px',
-  fontWeight:'bolder',
-  color:'#fff'
-})))
-
-const ButtonTable = styled(Button)((({theme}) => ({
-  backgroundColor: '#ff6b81',
-  padding: 1,
-  fontSize:'9px',
-  fontWeight: 'bolder',
-  color: '#fff',
-  marginLeft:1,
-  '&:hover': {
-      backgroundColor: '#ee6b81',
-    }
-})))
 
 const Jurnal_Table = ({getSelectData}) => {
   const [jurnal, setJurnal] = useState([]);
 
   useEffect(() => {
     getJurnal();
-  },[jurnal])
+  },[])
 
   const getJurnal = async () => {
-    await fetch('http://localhost/mytfidf/API/_getAllJurnal.php')
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/API/_getAllJurnal.php`)
     .then(res => res.json())
     .then(data => setJurnal(data))
   }
 
+
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <HeadTabel>
+    <MainTabel>
+        <TabelHead>
           <TableRow>
             <HeadCell align="left">No</HeadCell>
             <HeadCell>Judul Dokumen</HeadCell>
@@ -56,19 +33,14 @@ const Jurnal_Table = ({getSelectData}) => {
             <HeadCell>Tahun Terbit</HeadCell>
             <HeadCell>Aksi</HeadCell>
           </TableRow>
-        </HeadTabel>
+        </TabelHead>
         <TableBody>
           {jurnal.map((row, index) => (
-            <TableRow
-              key={row.title}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell align="left" size='small'>{index}</TableCell>
-              <TableCell component="th" scope="row">
-                {row.title}
-              </TableCell>
-              <TableCell>{row.kd_jurnal}</TableCell>
-              <TableCell>2020</TableCell>
+            <TableRow key={row.id}>
+              <TableCell align="left">{ index }</TableCell>
+              <TableCell component="th" scope="row">{ row.title }</TableCell>
+              <TableCell>{ row.kd_jurnal }</TableCell>
+              <TableCell>{ row.tahun_terbit }</TableCell>
               <TableCell>
                 <Box display={'flex'} flexDirection={'row'}>
                   <Visibility onClick={() => getSelectData(row.id,row.title,row.pengarang,row.tahun_terbit,row.abstrak,row.kd_jurnal) }/>
@@ -78,8 +50,7 @@ const Jurnal_Table = ({getSelectData}) => {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
-    </TableContainer>
+    </MainTabel>
   );
 }
 

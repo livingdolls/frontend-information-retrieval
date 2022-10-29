@@ -1,53 +1,37 @@
-import { Box, Paper, styled } from "@mui/material";
-import Table from '@mui/material/Table';
+import { Box } from "@mui/material";
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-
-const HeadTabel = styled(TableHead)((({theme}) => ({
-    backgroundColor: '#ff6b81',
-  })))
-  
-  const HeadCell = styled(TableCell)((({theme}) => ({
-    fontSize:'18px',
-    fontWeight:'bolder',
-    color:'#fff'
-  })))
+import HeadCell from "../Tabel/HeadCell";
+import MainTabel from "../Tabel/MainTabel";
+import TabelHead from "../Tabel/TabelHead";
 
 const TokenizingResult = ({data}) => {
     return(
         <Box sx={{width:'100%', marginLeft:'auto', marginRight:'auto'}}>
-            <TableContainer component={Paper}>
-            <Table aria-label="simple table">
-            <HeadTabel>
-                <TableRow>
-                <HeadCell align="left" size='small'>No</HeadCell>
-                <HeadCell>Jurnal id</HeadCell>
-                <HeadCell>Token</HeadCell>
-                <HeadCell>Kode Jurnal</HeadCell>
-                </TableRow>
-            </HeadTabel>
+            <MainTabel>
+                <TabelHead>
+                    <TableRow>
+                    <HeadCell align="left" size='small'>No</HeadCell>
+                    <HeadCell>Jurnal id</HeadCell>
+                    <HeadCell>Token</HeadCell>
+                    <HeadCell>Kode Jurnal</HeadCell>
+                    </TableRow>
+                </TabelHead>
 
             <TableBody>
                 {data.map((d,index) => {
-                    return (<TableRow
-                        key={d.id}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                        <TableCell align="left" size='small'>{index}</TableCell>
-                        <TableCell component="th" scope="row">
-                        {d.jurnal_id}
-                        </TableCell>
-                        <TableCell>{d.token}</TableCell>
-                        <TableCell>{d.kd_jurnal}</TableCell>
+                    return (
+                    <TableRow key={d.id}>
+                        <TableCell align="left" size='small'>{ index }</TableCell>
+                        <TableCell>{ d.jurnal_id }</TableCell>
+                        <TableCell>{ d.token }</TableCell>
+                        <TableCell>{ d.kd_jurnal }</TableCell>
                     </TableRow>)
                 })}
 
             </TableBody>
-        </Table>
-    </TableContainer>
+        </MainTabel>
     </Box>
     )
 }

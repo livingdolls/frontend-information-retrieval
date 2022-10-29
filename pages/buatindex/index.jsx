@@ -1,38 +1,17 @@
-import { Box, Button, styled, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Layout from "../../components/Layout";
-import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { Refresh, Visibility } from "@mui/icons-material";
 import { useState } from "react";
-import Display from "./Display";
-
-const HeadTabel = styled(TableHead)((({theme}) => ({
-    backgroundColor: '#ff6b81',
-  })))
-  
-  const HeadCell = styled(TableCell)((({theme}) => ({
-    fontSize:'18px',
-    fontWeight:'bolder',
-    color:'#fff'
-  })))
-  
-  const ButtonTable = styled(Button)((({theme}) => ({
-    backgroundColor: '#ff6b81',
-    padding: 2,
-    fontSize:'12px',
-    fontWeight: 'bolder',
-    color: '#fff',
-    marginLeft:1,
-    '&:hover': {
-        backgroundColor: '#ee6b81',
-      }
-  })))
-
+import MainTabel from "../../components/Tabel/MainTabel";
+import TabelHead from "../../components/Tabel/TabelHead";
+import HeadCell from "../../components/Tabel/HeadCell";
+import MainButton from "../../components/MainButton";
+import MainModal from "../../components/Modal/MainModal";
+import BodyModal from "../../components/Modal/BodyModal";
+import DataIndex from "../../components/buat_index/DataIndex";
   
   const BuatIndex = ({data}) => {
       const [loading, setLoading] = useState(false);
@@ -43,7 +22,7 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
       const handleRefresh = async () => {
         setLoading(true)
 
-        await fetch('http://localhost/mytfidf/API/_BuatIndex.php')
+        await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/API/_BuatIndex.php`)
         .then(res => res.json())
 
         setLoading(false)
@@ -52,55 +31,51 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
       const handleButton = async (id) => {
         setOpen(true);
 
-        await fetch('http://localhost/mytfidf/API/_getIndexById.php?id='+id)
+        await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/API/_getIndexById.php?id=`+id)
             .then(res => res.json())
             .then(d => setKata(d))
       }
     return(
-        <Layout>
-            <Box display={'flex'} flexDirection={'column'} gap={3} sx={{backgroundColor:'#fff', padding:1, paddingLeft:5}}>
-              <Box sx={{padding:'15px', backgroundColor:'#ff6b81', ml:-5, mt:-1, mr:-1}}>
-                <Typography fontWeight={'bolder'} variant="h6" sx={{color:'#fff'}}>Buat Index</Typography>
-              </Box>
-
+        <Layout judulmenu="Buat Index (Term Frequency)">
               {loading 
                 ?
-                <ButtonTable disabled endIcon={<Refresh />} sx={{width:"150px",ml:-4, p:1, fontSize:"14px", backgroundColor:"#eee"}}>Refresh...</ButtonTable>
+                <MainButton disabled endIcon={<Refresh />} sx={{fontSize:"14px", backgroundColor:"#eee"}}>Refresh...</MainButton>
                 :
-                <ButtonTable onClick={handleRefresh} endIcon={<Refresh />} sx={{width:"150px",ml:-4, p:1, fontSize:"14px"}}>Refresh</ButtonTable>
+                <MainButton onClick={handleRefresh} endIcon={<Refresh />} sx={{fontSize:"14px"}}>Refresh</MainButton>
               }
 
-              <Box sx={{padding:'15px', ml:-5, mt:-1, mr:-1}}>
-                  <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <HeadTabel>
-                            <TableRow>
-                                <HeadCell align="left" size='small'>No</HeadCell>
-                                <HeadCell>Judul Dokumen</HeadCell>
-                                <HeadCell>Index Term Frequency</HeadCell>
-                            </TableRow>
-                            </HeadTabel>
-                            <TableBody>
-                            {data.map((row, index) => (
-                                <TableRow
-                                key={row.title}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                <TableCell align="left" size='small'>{index}</TableCell>
-                                <TableCell component="th" scope="row">
-                                    {row.title}
-                                </TableCell>
-                                <TableCell>
-                                    <ButtonTable onClick={() => handleButton(row.id)}><Visibility /></ButtonTable>
-                                </TableCell>
-                                </TableRow>
-                            ))}
-                            </TableBody>
-                        </Table>
-                </TableContainer>
+              <Box sx={{mt:1}}>
+                  <MainTabel>
+                    <TabelHead>
+                        <TableRow>
+                            <HeadCell align="left" size='small'>No</HeadCell>
+                            <HeadCell>Judul Dokumen</HeadCell>
+                            <HeadCell>Index Term Frequency</HeadCell>
+                        </TableRow>
+                    </TabelHead>
+                    <TableBody>
+                    {data.map((row, index) => (
+                        <TableRow key={ row.title }>
+                        <TableCell align="left" size='small'>{ index }</TableCell>
+                        <TableCell>{ row.title }</TableCell>
+                        <TableCell>
+                            <MainButton onClick={() => handleButton( row.id )}><Visibility /></MainButton>
+                        </TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </MainTabel>
             </Box>
-            </Box>
-            <Display open={open} setOpen={setOpen} kata={kata} />
+
+            <MainModal
+                open={open}
+                setOpen={setOpen}
+                judulModal="Term Frequency"
+            >
+                <BodyModal>
+                    <DataIndex kata={ kata } />
+                </BodyModal>
+            </MainModal>
         </Layout>
     )
 }
@@ -108,7 +83,7 @@ const HeadTabel = styled(TableHead)((({theme}) => ({
 export default BuatIndex;
 
 export const getStaticProps = async () => {
-    const res = await fetch('http://localhost/mytfidf/API/_getAllJurnal.php') 
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/API/_getAllJurnal.php`) 
     const data = await res.json()
 
     return {

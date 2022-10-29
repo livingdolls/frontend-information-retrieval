@@ -1,8 +1,10 @@
 import { Close } from "@mui/icons-material";
-import { Box, Button, Modal, styled, TextField } from "@mui/material";
+import { Box, Modal, styled } from "@mui/material";
 import { useState } from "react";
+import MainInput from "../../components/Form/MainInput";
+import MainButton from "../../components/MainButton";
 
-const HeadInfo = styled(Box)((({theme}) => ({
+const HeadInfo = styled(Box)({
     backgroundColor: '#ff6b81',
     padding: 16,
     fontSize:'19px',
@@ -10,30 +12,13 @@ const HeadInfo = styled(Box)((({theme}) => ({
     color: '#fff',
     borderRadius: '5px 5px 0 0',
     width: '700px'
-  })))
+  })
 
-const BodyInfo = styled(Box)((({theme}) => ({
+const BodyInfo = styled(Box)({
     backgroundColor: '#fff',
     padding: 8,
     fontSize:'15px',
-  })))
-
-const Field = styled(TextField)({
-    '& label.Mui-focused': {
-      color: '#ff6b81',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#ff6b81',
-    },
-    '& .MuiOutlinedInput-root': {
-      '&:hover fieldset': {
-        borderColor: '#ff6b81',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#ff6b81',
-      },
-    },
-  });
+  })
 
 const AddJurnal = ({open, setOpen, setAlert}) => {
     const [formData, setFormData] = useState({
@@ -145,14 +130,13 @@ const AddJurnal = ({open, setOpen, setAlert}) => {
         <Box sx={{position:'absolute', right:20, top:50}}>
             <HeadInfo display={'flex'} justifyContent='space-between'>
                 Tambah Jurnal
-
                 <Close onClick={() => setOpen(false)} />
             </HeadInfo>
 
             <BodyInfo>
                 <form onSubmit={handleSubmit}>
                     <Box mt={1} mb={2} paddingX={2} sx={{display: 'flex', flexDirection:'column', gap:2}}>
-                        <Field
+                        <MainInput
                             label='Judul Jurnal'
                             variant="outlined"
                             fullWidth
@@ -161,7 +145,7 @@ const AddJurnal = ({open, setOpen, setAlert}) => {
                             onChange={(e) => handleForm(e)}
                         />
 
-                        <Field
+                        <MainInput
                             label="Pengarang"
                             variant="outlined"
                             fullWidth
@@ -170,7 +154,7 @@ const AddJurnal = ({open, setOpen, setAlert}) => {
                             onChange={(e) => handleForm(e)}
                         />
 
-                        <Field 
+                        <MainInput
                             label="Tahun Terbit"
                             variant="outlined"
                             fullWidth
@@ -179,7 +163,7 @@ const AddJurnal = ({open, setOpen, setAlert}) => {
                             onChange={(e) => handleForm(e)}
                         />
                         
-                        <Field 
+                        <MainInput
                             label="Kode Jurnal"
                             variant="outlined"
                             fullWidth
@@ -188,7 +172,7 @@ const AddJurnal = ({open, setOpen, setAlert}) => {
                             onChange={(e) => handleForm(e)}
                         />
 
-                        <Field 
+                        <MainInput
                             label="Abstrak"
                             variant="outlined"
                             fullWidth
@@ -201,28 +185,13 @@ const AddJurnal = ({open, setOpen, setAlert}) => {
 
                         {loading 
                           ?
-                          <Button variant="contained" 
-                              disabled
-                              type="submit"
-                              sx={{backgroundColor:'#ff6b81',
-                                '&:hover': {
-                                    backgroundColor: '#ee6b81',
-                                  }
-                              }}
-                            >
-                                Loading...
-                          </Button>
+                          <MainButton disabled type="submit" sx={{padding:"10px"}}>
+                              Loading...
+                          </MainButton>
                           :
-                          <Button variant="contained" 
-                            type="submit"
-                            sx={{backgroundColor:'#ff6b81',
-                              '&:hover': {
-                                  backgroundColor: '#ee6b81',
-                                }
-                            }}
-                              >
-                                  Tambah Jurnal
-                        </Button>
+                          <MainButton type="submit" sx={{padding:"10px"}}>
+                              Tambah Jurnal
+                          </MainButton>
                         }
                         
                     </Box>
