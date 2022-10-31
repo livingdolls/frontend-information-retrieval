@@ -4,13 +4,13 @@ import { useState } from "react";
 import AlertModal from "../../components/AlertModal";
 import Layout from "../../components/Layout";
 import MainButton from "../../components/MainButton";
+import ModalDialog from "../../components/ModalDialog";
 import AddJurnal from "./AddJurnal";
 import Jurnal_Info from "./Jurnal_Info";
 import Jurnal_Table from "./Jurnal_Table";
 
 const Jurnal = () => {
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
     const [selectData, setSelectData] = useState({
         id:0,
         judul:"Sistem Temu Kembali",
@@ -19,13 +19,12 @@ const Jurnal = () => {
         kd:"FTI",
         abstrak:"Hello World"
     })
-
+    
     const [alert, setAlert] = useState({
         alert:false,
         pesan : '',
         severity:'success',
     })
-
 
     const getSelectData = (id,title,pengarang,tahun,abstrak,kd) => {
         setSelectData({
@@ -38,6 +37,42 @@ const Jurnal = () => {
         })
     }
 
+    const [openDialog, setOpenDialog] = useState({
+        open:false,
+        id:'',
+        isLoading:false
+    });
+    
+    const handleOpen = () => setOpen(true);
+
+
+    const handleModal = (id) => {
+        setOpenDialog({
+            open:true,
+            isLoading:false,
+            id:id,
+            title:'Confirm Delete',
+            content: `Apa anda yakin akan menghapus Jurnal dengan id ${id} ?, setelah terhapus data tidak akan bisa dikembalikan `
+        })
+    }
+
+    const handleAction = async (data) => {
+        const { id } = data;
+        setOpenDialog({
+            open:true,
+            id:id,
+            isLoading:true
+        })
+
+        await fetch(`http://localhost/mytfidf/API/_hapusJurnal.php?id=`+id)
+        .then(res => res.json())
+        .then((d) => setOpenDialog({
+            open:false,
+            id:'',
+            isLoading:false
+        }));
+    }
+    
     return(
         <Layout judulmenu="Data Jurnal">
             <AlertModal pesan={alert.pesan} severity={alert.severity} alert={alert.alert} setAlert={alert.setAlert} />
@@ -54,7 +89,7 @@ const Jurnal = () => {
 
                 <Grid container spacing={2} mt={2}>
                     <Grid item xs={8}>
-                        <Jurnal_Table getSelectData={getSelectData} />
+                        <Jurnal_Table getSelectData={getSelectData} handleModal={handleModal} />
                     </Grid>
 
                     <Grid item xs={4}>
@@ -63,6 +98,7 @@ const Jurnal = () => {
                 </Grid>
 
                 <AddJurnal open={open} setOpen={setOpen} setAlert={setAlert} />
+                <ModalDialog openDialog={openDialog} setOpenDialog={setOpenDialog} handleAction={handleAction} />
             </Box>
         </Layout>
     )

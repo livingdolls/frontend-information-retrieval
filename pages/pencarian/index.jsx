@@ -4,7 +4,7 @@ import { useState } from "react";
 import MainInput from "../../components/Form/MainInput";
 import Layout from "../../components/Layout";
 import MainButton from "../../components/MainButton";
-import BoxResult from "./BoxResult";
+import BoxResult from "../../components/pencarian/BoxResult";
 
 const Pencarian = () => {
   const [query, setQuery] = useState();
@@ -13,20 +13,14 @@ const Pencarian = () => {
     jml: 0,
     data: []
   });
+  const [queryInfo, setQueryInfo] = useState({
+    bobot: [],
+    product: []
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    // Validate
-    if (!query) {
-      setAlert({ alert: true, pesan: 'Title tidak boleh kosong', severity: 'error' })
-      setTimeout(() => {
-        setAlert({ alert: false, pesan: 'Title tidak boleh kosong', severity: 'error' })
-        setLoading(false)
-      }, 2000);
-      return ''
-    }
 
     await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/_getPencarian.php`, {
       method: "POST",
@@ -42,11 +36,15 @@ const Pencarian = () => {
         setResult(data)
         setLoading(false)
       })
+
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/API/_queryInfo.php`)
+    .then(res => res.json())
+    .then((d) => setQueryInfo(d))
   }
   
   return (
     <Layout judulmenu="Pencarian Jurnal">
-      <Box>
+      <Box marginBottom={1}>
         <form onSubmit={handleSubmit}>
           <MainInput
             placeholder="Kata Kunci Pencarian"
@@ -65,7 +63,7 @@ const Pencarian = () => {
         ?
         <CircularProgress sx={{ ml: '300px' }} />
         :
-        <BoxResult result={result} />
+        <BoxResult result={result} queryInfo={queryInfo} />
       }
     </Layout>
   )

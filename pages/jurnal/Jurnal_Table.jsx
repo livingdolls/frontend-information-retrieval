@@ -9,19 +9,18 @@ import TabelHead from '../../components/Tabel/TabelHead';
 import HeadCell from '../../components/Tabel/HeadCell';
 
 
-const Jurnal_Table = ({getSelectData}) => {
+const Jurnal_Table = ({getSelectData, handleModal}) => {
   const [jurnal, setJurnal] = useState([]);
 
   useEffect(() => {
     getJurnal();
-  },[])
+  },[getSelectData])
 
   const getJurnal = async () => {
     await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/API/_getAllJurnal.php`)
     .then(res => res.json())
     .then(data => setJurnal(data))
   }
-
 
   return (
     <MainTabel>
@@ -44,7 +43,7 @@ const Jurnal_Table = ({getSelectData}) => {
               <TableCell>
                 <Box display={'flex'} flexDirection={'row'}>
                   <Visibility onClick={() => getSelectData(row.id,row.title,row.pengarang,row.tahun_terbit,row.abstrak,row.kd_jurnal) }/>
-                  <Delete />
+                  <Delete onClick={() => handleModal(row.id)} />
                 </Box>
               </TableCell>
             </TableRow>

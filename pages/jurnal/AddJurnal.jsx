@@ -35,54 +35,6 @@ const AddJurnal = ({open, setOpen, setAlert}) => {
       e.preventDefault();
       setLoading(true);
 
-      // Validate
-      if(!formData.title){
-        setAlert({alert:true,pesan:'Title tidak boleh kosong',severity:'error'})
-        setTimeout(() => {
-          setAlert({alert:false,pesan:'Title tidak boleh kosong',severity:'error'})
-            setLoading(false)
-        }, 2000);
-        return ''
-      }
-
-      if(!formData.pengarang){
-        setAlert({alert:true,pesan:'Pengarang tidak boleh kosong',severity:'error'})
-        setTimeout(() => {
-          setAlert({alert:false,pesan:'Pengarang tidak boleh kosong',severity:'error'})
-            setLoading(false)
-        }, 2000);
-        return ''
-      }
-
-      if(!formData.tahun){
-        setAlert({alert:true,pesan:'Tahun tidak boleh kosong',severity:'error'})
-        setTimeout(() => {
-          setAlert({alert:false,pesan:'Tahun tidak boleh kosong',severity:'error'})
-            setLoading(false)
-        }, 2000);
-        return ''
-      }
-
-      if(!formData.abstrak){
-        setAlert({alert:true,pesan:'Abstrak tidak boleh kosong',severity:'error'})
-        setTimeout(() => {
-          setAlert({alert:false,pesan:'Abstrak tidak boleh kosong',severity:'error'})
-            setLoading(false)
-        }, 2000);
-        return ''
-      }
-
-      if(!formData.kode){
-        setAlert({alert:true,pesan:'Kode Jurnal tidak boleh kosong',severity:'error'})
-        setTimeout(() => {
-          setAlert({alert:false,pesan:'Kode Jurnal tidak boleh kosong',severity:'error'})
-            setLoading(false)
-        }, 2000);
-        return ''
-      }
-
-      // End Validate
-
       await fetch("http://localhost/mytfidf/API/_postJurnal.php", {
         method : "POST",
         headers: {
