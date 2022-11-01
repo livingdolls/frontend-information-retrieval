@@ -15,7 +15,8 @@ const Pencarian = () => {
   });
   const [queryInfo, setQueryInfo] = useState({
     bobot: [],
-    product: []
+    product: [
+      {result:0}]
   })
 
   const handleSubmit = async (e) => {

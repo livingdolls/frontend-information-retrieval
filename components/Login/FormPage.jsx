@@ -1,4 +1,5 @@
 import { Box, styled, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import MainInput from "../Form/MainInput";
 import MainButton from "../MainButton";
@@ -15,11 +16,30 @@ const FormPage = () => {
         username:'',
         password:''
     })
+    const router = useRouter();
 
-    const loginHandle = (e) => {
+    const loginHandle = async (e) => {
         e.preventDefault();
 
-        console.log(formLogin)
+        await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/API/_AuthLogin.php`,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body:JSON.stringify({
+                'uname':formLogin.username,
+                'upass':formLogin.password
+            })
+        })
+        .then(res => res.json())
+        .then((d) => {
+            if(!d.isLogin){
+                return alert(d.msg)
+            }
+            localStorage.setItem('login', JSON.stringify(d))
+            router.push('/')
+        }
+        )
     }
 
     const handleForm = (e) => {

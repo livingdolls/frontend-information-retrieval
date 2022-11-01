@@ -1,16 +1,20 @@
 import { Add } from "@mui/icons-material";
 import { Box, Grid } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AlertModal from "../../components/AlertModal";
 import Layout from "../../components/Layout";
 import MainButton from "../../components/MainButton";
 import ModalDialog from "../../components/ModalDialog";
-import AddJurnal from "./AddJurnal";
-import Jurnal_Info from "./Jurnal_Info";
-import Jurnal_Table from "./Jurnal_Table";
+import AddJurnal from "../../components/jurnal/AddJurnal";
+import Jurnal_Info from "../../components/jurnal/Jurnal_Info";
+import Jurnal_Table from "../../components/jurnal/Jurnal_Table";
 
 const Jurnal = () => {
     const [open, setOpen] = useState(false);
+    const [user, setUser] = useState({
+        isLogin: false,
+        user: []
+    });
     const [selectData, setSelectData] = useState({
         id:0,
         judul:"Sistem Temu Kembali",
@@ -56,6 +60,19 @@ const Jurnal = () => {
         })
     }
 
+    useEffect(() => {
+        fetchUser();
+    }, [])
+
+    const fetchUser = () => {
+        try {
+            const login = JSON.parse(localStorage.login)
+            setUser(login)
+        } catch (error) {
+            return ''           
+        }
+    }
+
     const handleAction = async (data) => {
         const { id } = data;
         setOpenDialog({
@@ -78,18 +95,23 @@ const Jurnal = () => {
             <AlertModal pesan={alert.pesan} severity={alert.severity} alert={alert.alert} setAlert={alert.setAlert} />
      
             <Box minHeight={'100vh'}>
-                <MainButton
-                    onClick={handleOpen}
-                    endIcon={<Add />}  
-                    size={'large'}
-                    sx={{marginBottom:-3}}
-                >
-                    Tambah Dokumen Jurnal
-                </MainButton>
+                {
+                    user.isLogin 
+                    ?
+                    <MainButton
+                        onClick={handleOpen}
+                        endIcon={<Add />}  
+                        size={'large'}
+                        sx={{marginBottom:-3}}
+                    >
+                        Tambah Dokumen Jurnal
+                    </MainButton>
+                    : ''
+                }
 
                 <Grid container spacing={2} mt={2}>
                     <Grid item xs={8}>
-                        <Jurnal_Table getSelectData={getSelectData} handleModal={handleModal} />
+                        <Jurnal_Table getSelectData={getSelectData} handleModal={handleModal} user={user} />
                     </Grid>
 
                     <Grid item xs={4}>

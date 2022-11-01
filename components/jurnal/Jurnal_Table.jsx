@@ -4,12 +4,12 @@ import TableRow from '@mui/material/TableRow';
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Delete, Visibility } from '@mui/icons-material';
-import MainTabel from '../../components/Tabel/MainTabel';
-import TabelHead from '../../components/Tabel/TabelHead';
-import HeadCell from '../../components/Tabel/HeadCell';
+import MainTabel from '../Tabel/MainTabel';
+import TabelHead from '../Tabel/TabelHead';
+import HeadCell from '../Tabel/HeadCell';
 
 
-const Jurnal_Table = ({getSelectData, handleModal}) => {
+const Jurnal_Table = ({getSelectData, handleModal, user}) => {
   const [jurnal, setJurnal] = useState([]);
 
   useEffect(() => {
@@ -43,7 +43,12 @@ const Jurnal_Table = ({getSelectData, handleModal}) => {
               <TableCell>
                 <Box display={'flex'} flexDirection={'row'}>
                   <Visibility onClick={() => getSelectData(row.id,row.title,row.pengarang,row.tahun_terbit,row.abstrak,row.kd_jurnal) }/>
-                  <Delete onClick={() => handleModal(row.id)} />
+                  {
+                    user.isLogin 
+                    ?
+                    <Delete onClick={() => handleModal(row.id)} />
+                    : ''
+                  }
                 </Box>
               </TableCell>
             </TableRow>

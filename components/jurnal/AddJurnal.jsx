@@ -1,8 +1,8 @@
 import { Close } from "@mui/icons-material";
 import { Box, Modal, styled } from "@mui/material";
 import { useState } from "react";
-import MainInput from "../../components/Form/MainInput";
-import MainButton from "../../components/MainButton";
+import MainInput from "../Form/MainInput";
+import MainButton from "../MainButton";
 
 const HeadInfo = styled(Box)({
     backgroundColor: '#ff6b81',

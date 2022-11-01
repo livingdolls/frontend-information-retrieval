@@ -23,6 +23,7 @@ const BoxResult = ({ result, queryInfo }) => {
             </Box>
 
             <Box width={400}>
+                {query.length !== 0 ?
                     <MainTabel>
                         <TabelHead>
                             <TableRow>
@@ -34,7 +35,7 @@ const BoxResult = ({ result, queryInfo }) => {
                         <TableBody>
                                 {query.map((info) => {
                                     return(
-                                        <TableRow>
+                                        <TableRow key={ info.id }>
                                             <TableCell>{ info.term }</TableCell>
                                             <TableCell>{ info.jumlah }</TableCell>
                                             <TableCell>{ info.bobot }</TableCell>
@@ -43,6 +44,8 @@ const BoxResult = ({ result, queryInfo }) => {
                                 })}
                         </TableBody>
                     </MainTabel>
+                    : ''
+                }
             </Box>
 
         </Box>
