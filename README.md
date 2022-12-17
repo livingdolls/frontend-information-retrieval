@@ -1,34 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Information Retrieval
 
-## Getting Started
+Sistem pencarian dokumen
 
-First, run the development server:
+## Authors
+
+-   [Nanang Setiawan](https://github.com/livingdolls/)
+
+## 🚀 About Me
+
+I'm a full stack developer and i think im funny
+
+## Features
+
+-   Algoritma pembobotan TF-IDF
+-   Metode Perangkingan Cosine Similarity
+-   Text Preprocessing
+-   Kamus Stemming dan Non Kamus Stemming
+-   Multi role admin dan user
+-   Manajemen Dokumen
+-   ETC
+
+## Tech Stack
+
+**Client:** Next JS, Material UI
+
+**Server:** PHP, MySql
+
+## Screenshots
+
+![alt text](https://raw.githubusercontent.com/livingdolls/frontend-information-retrieval/main/src/img/Information-retrieval.png)
+
+## Deployment
+
+To deploy this project run
 
 ```bash
-npm run dev
-# or
-yarn dev
+  yarn run deploy
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run Locally
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Clone the project
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```bash
+  git clone https://github.com/livingdolls/frontend-information-retrieval.git
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Go to the project directory
 
-## Learn More
+```bash
+  cd frontend-information-retrieval
+```
 
-To learn more about Next.js, take a look at the following resources:
+Install dependencies
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+ yarn  install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Start the server
 
-## Deploy on Vercel
+```bash
+  yarn start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[MIT](https://choosealicense.com/licenses/mit/)
